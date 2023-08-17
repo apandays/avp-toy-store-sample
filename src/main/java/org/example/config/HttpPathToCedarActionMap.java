@@ -14,7 +14,7 @@ public class HttpPathToCedarActionMap {
             StringUtils.lowerCase("GET /store/{store-id}/order/{order-Id}/box_size"), "GetOrderBoxSize",
             StringUtils.lowerCase("DELETE /store/{store-id}/order/{order-Id}"), "DeleteOrder",
             StringUtils.lowerCase("PUT /store/{store-id}/pack_associate/{employee-id}"), "AddPackAssociate",
-            StringUtils.lowerCase("PUT /store/{store-id}/store_associate/{employee-id}"), "AddStoreManager"
+            StringUtils.lowerCase("PUT /store/{store-id}/store_manager/{employee-id}"), "AddStoreManager"
     );
 
     public static String getCedarAction(String httpRouteKey) {

@@ -25,20 +25,23 @@ public class LambdaAuthorizer implements RequestHandler<APIGatewayV2HTTPEvent, A
     // this will no longer be required when Cedar support the "is" operator
 
     private final ResourceEntityBuilderFactory resourceEntityBuilderFactory = new ResourceEntityBuilderFactory();
-    private static final String policyStoreId = System.getenv("policyStoreId");
+    private static final String POLICY_STORE_ID = System.getenv("policyStoreId");
     public static final String AUTHORIZATION_HEADER_NAME = "authorization";
 
-    private static String getSub(APIGatewayV2HTTPEvent event) throws IOException {
-        String jwt = event.getHeaders().get(AUTHORIZATION_HEADER_NAME);
-        String claimsBase64 = jwt.substring(jwt.indexOf('.') + 1, jwt.lastIndexOf('.'));
+    private static String getSub(APIGatewayV2HTTPEvent event)  {
+        try {
+            String jwt = event.getHeaders().get(AUTHORIZATION_HEADER_NAME);
+            String claimsBase64 = jwt.substring(jwt.indexOf('.') + 1, jwt.lastIndexOf('.'));
 
-        byte[] claimsByte = Base64.getDecoder().decode(claimsBase64);
-        ObjectMapper mapper = new ObjectMapper();
-        Map<String, Object> claimsMap = mapper.readValue(claimsByte,
-            new TypeReference<Map<String, Object>>() {
-        });
-        return (String) claimsMap.get("sub");
-
+            byte[] claimsByte = Base64.getDecoder().decode(claimsBase64);
+            ObjectMapper mapper = new ObjectMapper();
+            Map<String, Object> claimsMap = mapper.readValue(claimsByte,
+                    new TypeReference<Map<String, Object>>() {
+                    });
+            return (String) claimsMap.get("sub");
+        } catch(IOException e) {
+            throw new InternalError(e);
+        }
     }
 
     @Override
@@ -59,7 +62,7 @@ public class LambdaAuthorizer implements RequestHandler<APIGatewayV2HTTPEvent, A
                     withResource(resourceEntitiesPair.getLeft()).
                     withEntities(resourceEntitiesPair.getRight()).
                     withAction(actionIdentifier).
-                    withPolicyStoreId(policyStoreId);
+                    withPolicyStoreId(POLICY_STORE_ID);
 
             System.out.println(isAuthorizedWithTokenRequest);
             IsAuthorizedWithTokenResult authorizationResult = AmazonVerifiedPermissionsClientBuilder.
@@ -68,8 +71,10 @@ public class LambdaAuthorizer implements RequestHandler<APIGatewayV2HTTPEvent, A
 
             return buildAuthorizerResponse(sub, requestContext, authorizationResult.getDecision().toLowerCase());
         } catch (Exception e) {
-            System.out.println(e.getMessage() + " " + e.getCause());
-            return buildAuthorizerResponse(null, event.getRequestContext(), "Deny");
+            System.out.println("Error in processing request" );
+
+            System.out.println(e.getMessage() + " " + e.getCause() );
+            return buildAuthorizerResponse(getSub(event), event.getRequestContext(), "Deny");
         }
     }
 
