@@ -25,6 +25,7 @@
                 <artifactId>aws-java-sdk-core </artifactId>
                 <version>1.12.520</version>
             </dependency>
+
             <dependency>
                 <groupId>com.amazonaws</groupId>
                 <artifactId>aws-lambda-java-events</artifactId>
@@ -35,7 +36,11 @@
                 <artifactId>jjwt</artifactId>
                 <version>0.7.0</version>
             </dependency>
-
+            <dependency>
+                <groupId>com.amazonaws</groupId>
+                <artifactId>aws-java-sdk-cognitoidp</artifactId>
+                <version>1.12.529</version>
+            </dependency>
             <dependency>
                 <groupId>com.googlecode.json-simple</groupId>
                 <artifactId>json-simple</artifactId>
