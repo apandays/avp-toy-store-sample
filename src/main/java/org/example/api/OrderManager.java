@@ -30,8 +30,8 @@ public class OrderManager implements RequestHandler<APIGatewayV2HTTPEvent, APIGa
             } else {
                 //Custom environment variables created in JavaCdkStack
                 JSONObject envObject = new JSONObject();
-                String artifactId = event.getPathParameters().get("artifact-id");
-                response.put("orderDescription", "Getting back artifact with ID" + artifactId);
+                String orderId = event.getPathParameters().get("order-id");
+                response.put("orderDescription", "Getting back artifact for order  " + orderId);
                 return ok(response);
             }
         } catch (Exception exc) {

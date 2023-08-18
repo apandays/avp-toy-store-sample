@@ -18,6 +18,8 @@ public class ResourceEntityBuilderFactory {
         } else if (
                 lowerCaseHttpPath.equals(("PUT /store/{store-id}/pack_associate/{employee-id}").toLowerCase()) ||
                 lowerCaseHttpPath.equals(("PUT /store/{store-id}/store_manager/{employee-id}").toLowerCase()) ||
+                lowerCaseHttpPath.equals(("GET /store/{store-id}/store_manager").toLowerCase()) ||
+                lowerCaseHttpPath.equals(("GET /store/{store-id}/pack_associate").toLowerCase()) ||
                 lowerCaseHttpPath.equals(("GET /store/{store-id}/orders").toLowerCase())
         ) {
             return new StoreResourceEntityBuilder();
