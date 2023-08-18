@@ -110,7 +110,7 @@ public class PermissionHandler {
             APIGatewayV2HTTPResponse response = new APIGatewayV2HTTPResponse();
             System.out.println("The policy already exists for principal " + employeeId + " and store " + storeId);
             response.setStatusCode(200);
-            response.setBody(policies.get(0).getPolicyId());
+            response.setBody("{\"policy-id\":\""+policies.get(0).getPolicyId()+"\"}");
             return response;
         }
         System.out.println("Creating policy for principal " + employeeId + " with principal id " + USER_POOL_ID + "|" + sub + " and store " + storeId);
@@ -126,7 +126,7 @@ public class PermissionHandler {
 
         APIGatewayV2HTTPResponse response = new APIGatewayV2HTTPResponse();
         response.setStatusCode(200);
-        response.setBody(createPolicyResult.getPolicyId());
+        response.setBody("{\"policy-id\":\""+createPolicyResult.getPolicyId()+"\"}");
         return response;
     }
 
