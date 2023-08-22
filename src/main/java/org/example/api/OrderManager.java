@@ -19,21 +19,12 @@ public class OrderManager implements RequestHandler<APIGatewayV2HTTPEvent, APIGa
         System.out.println("event: " + event.toString());
         JSONObject response = new JSONObject();
         try {
-            if (event.getRouteKey().toLowerCase().equals("GET /store/{store-id}/order/{order-Id}") ||
-                    event.getRouteKey().toLowerCase().equals("GET /store/{store-id}/orders")) {
                 //Custom environment variables created in JavaCdkStack
                 JSONObject envObject = new JSONObject();
                 String orderId = event.getPathParameters().get("order-id");
-                response.put("orderDescription", "this is a description for order " + orderId);
+                response.put("orderDescription", "This is a mock response. THe actual response would have return detailed for order: " + orderId);
+                return ok(response);
 
-                return ok(response);
-            } else {
-                //Custom environment variables created in JavaCdkStack
-                JSONObject envObject = new JSONObject();
-                String orderId = event.getPathParameters().get("order-id");
-                response.put("orderDescription", "Getting back artifact for order  " + orderId);
-                return ok(response);
-            }
         } catch (Exception exc) {
             return error(response, exc);
         }
