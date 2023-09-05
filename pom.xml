@@ -6,12 +6,17 @@
 
     <groupId>org.example</groupId>
     <artifactId>sample-avp-toy-store</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0</version>
 
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        
+        <region>ap-southeast-2</region>
+        <application>sample-avp-toy-store</application>
+        <artifact.bucket>${application}-artifacts</artifact.bucket>
+        <CognitoUserPool>${CognitoUserPool}</CognitoUserPool>
     </properties>
 
         <dependencies>
@@ -79,15 +84,95 @@
                 <artifactId>commons-lang3</artifactId>
                 <version>3.1</version>
             </dependency>
+            
         </dependencies>
     <build>
         <plugins>
+             <plugin>
+                <groupId>com.github.davidmoten</groupId>
+                <artifactId>aws-maven-plugin</artifactId>
+                <version>0.2.27</version>
+                <executions>
+                    <execution>
+                        <id>prop</id>
+                        <goals>
+                            <goal>property</goal>
+                        </goals>
+                        <configuration>
+                            <serverId>${server.id}</serverId>
+                            <region>${region}</region>
+                            <!-- optional proxy config -->
+                            <httpsProxyHost>${proxy.host}</httpsProxyHost>
+                            <httpsProxyPort>${proxy.port}</httpsProxyPort>
+                                
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>file</id>
+                        <goals>
+                            <goal>deployFileS3</goal>
+                        </goals>
+                        <configuration>
+                            <serverId>${server.id}</serverId>
+                            <region>ap-southeast-2</region>
+                            <!-- <bucketName>${artifact.bucket}</bucketName>-->
+                            <bucketName>${artifact.bucket}</bucketName>
+                            <create>true</create>
+                            <file>${project.build.directory}/${project.artifactId}-${project.version}.jar</file>
+                            <objectName>${project.artifactId}-${project.version}.jar</objectName>
+                            <!-- optional proxy config -->
+                            <httpsProxyHost>${proxy.host}</httpsProxyHost>
+                            <httpsProxyPort>${proxy.port}</httpsProxyPort>
+                        </configuration>
+                    </execution>
+                    <!-- mvn aws:deployCf@cf -->
+                    <execution>
+                        <id>cf</id>
+                        <goals>
+                            <goal>deployCf</goal>
+                        </goals>
+                        <configuration>
+                            <serverId>${server.id}</serverId>
+                            <region>ap-southeast-2</region>
+                            <stackName>${application}</stackName>
+                            <parameters>
+                                <Region>ap-southeast-2</Region>
+                                <artifactBucket>${artifact.bucket}</artifactBucket>
+                                <artifactObjectName>${project.artifactId}-${project.version}.jar</artifactObjectName>
+                                <CognitoUserPool>${CognitoUserPool}</CognitoUserPool>
+                            </parameters>
+                            <template>AVP-API-gateway.yaml</template>
+                            <intervalSeconds>2</intervalSeconds>
+                            <!-- optional proxy config -->
+                            <httpsProxyHost>${proxy.host}</httpsProxyHost>
+                            <httpsProxyPort>${proxy.port}</httpsProxyPort>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>api</id>
+                        <goals>
+                            <goal>deployRestApi</goal>
+                        </goals>
+                        <configuration>
+                            <serverId>${server.id}</serverId>
+                            <region>${region}</region>
+                            <restApiName>${application}</restApiName>
+                            <stage>api</stage>
+                            <!-- optional proxy config -->
+                            <httpsProxyHost>${proxy.host}</httpsProxyHost>
+                            <httpsProxyPort>${proxy.port}</httpsProxyPort>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
-                <version>2.3</version>
+                <version>3.2.4</version>
                 <configuration>
                     <createDependencyReducedPom>false</createDependencyReducedPom>
+                    <serverId>${server.id}</serverId>
+                    <region>${region}</region>
                 </configuration>
                 <executions>
                     <execution>
@@ -97,6 +182,7 @@
                         </goals>
                     </execution>
                 </executions>
+                
             </plugin>
         </plugins>
     </build>
