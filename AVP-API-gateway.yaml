@@ -143,7 +143,7 @@ Resources:
                     userPoolId: !Sub '${CognitoUserPool}'
                     storeManagerTemplateId: !Sub '${StoreManagerPolicyTemplate}'
                     packAssociateTemplateId: !Sub '${PackAssociatesPolicyTemplate}'
-                    CustomerPolicyTemplate: !Sub '${CustomerPolicyTemplate}'
+                    customerTemplateId: !Sub '${CustomerPolicyTemplate}'
 
             FunctionName: "sample-avp-toy-store-authorizer"
             Handler: "org.example.api.LambdaAuthorizer::handleRequest"
@@ -172,7 +172,7 @@ Resources:
                     userPoolId: !Sub '${CognitoUserPool}'
                     storeManagerTemplateId: !Sub '${StoreManagerPolicyTemplate}'
                     packAssociateTemplateId: !Sub '${PackAssociatesPolicyTemplate}'
-                    CustomerPolicyTemplate: !Sub '${CustomerPolicyTemplate}'
+                    customerTemplateId: !Sub '${CustomerPolicyTemplate}'
             FunctionName: "sample-avp-toy-store-order-manager"
             Handler: "org.example.api.OrderManager::handleRequest"
             Architectures: 
@@ -199,7 +199,7 @@ Resources:
                     userPoolId: !Sub '${CognitoUserPool}'
                     storeManagerTemplateId: !Sub '${StoreManagerPolicyTemplate}'
                     packAssociateTemplateId: !Sub '${PackAssociatesPolicyTemplate}'
-                    CustomerPolicyTemplate: !Sub '${CustomerPolicyTemplate}'
+                    customerTemplateId: !Sub '${CustomerPolicyTemplate}'
             FunctionName: "sample-avp-toy-store-role-manager"
             Handler: "org.example.api.PermissionHandler::grantAccess"
             Architectures: 
