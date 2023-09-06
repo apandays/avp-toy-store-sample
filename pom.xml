@@ -13,7 +13,7 @@
         <maven.compiler.target>11</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         
-        <region>ap-southeast-2</region>
+        <region>${region}</region>
         <application>sample-avp-toy-store</application>
         <artifact.bucket>${application}-artifacts</artifact.bucket>
         <CognitoUserPool>${CognitoUserPool}</CognitoUserPool>
@@ -114,7 +114,7 @@
                         </goals>
                         <configuration>
                             <serverId>${server.id}</serverId>
-                            <region>ap-southeast-2</region>
+                            <region>${region}</region>
                             <!-- <bucketName>${artifact.bucket}</bucketName>-->
                             <bucketName>${artifact.bucket}</bucketName>
                             <create>true</create>
@@ -133,10 +133,10 @@
                         </goals>
                         <configuration>
                             <serverId>${server.id}</serverId>
-                            <region>ap-southeast-2</region>
+                            <region>${region}</region>
                             <stackName>${application}</stackName>
                             <parameters>
-                                <Region>ap-southeast-2</Region>
+                                <Region>${region}</Region>
                                 <artifactBucket>${artifact.bucket}</artifactBucket>
                                 <artifactObjectName>${project.artifactId}-${project.version}.jar</artifactObjectName>
                                 <CognitoUserPool>${CognitoUserPool}</CognitoUserPool>
