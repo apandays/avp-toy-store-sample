@@ -1,0 +1,35 @@
+Deployment:
+
+Prerequisites:
+•	Maven installed
+•	Temporary AWS credentials configured for command line (TBD on details)
+
+This application can be deployed to your AWS account by following the steps below. 
+
+Instructions:
+
+./deploy.sh  -Dapplication=<YOUR_APP_NAME> -DCognitoUserPool=<YOUR_COGNITO_USERPOOL_ID> -Dregion=<AWS_REGION>
+
+(YOUR_APP_NAME can consist only of lowercase letters, numbers, dots (.), and hyphens (-))
+
+The call to deploy.sh will do the following:
+
+•	build the project jar artifact
+•	create a bucket for artifacts (for lambda) for the application if doesn't exist (a unique name built from application)
+•	deploy the built maven artifact versioned and timestamped to the artifact bucket
+•	deploy a CloudFormation stack comprising
+o	3 lambda functions
+o	lambda execution roles
+o	api gateway
+o	api gateway stage
+o	api gateway Lambda authorizer 
+o	API Paths 
+o	permissions for the api gateway to call the lambda functions 
+o	Verified Permissions Policy Store
+o	Policy Templates as described earlier
+•	deploy the stage (not performed automatically by a CloudFormation update) (Ignore if you see the following error “no rest api found with name='your_app_name' “on command prompt but the CloudFormation Stack is complete with “CREATE_COMPLETE” status)
+
+How to delete the api
+To remove the whole stack go to the AWS Console at CloudFormation - Stacks - myapp - Actions - Delete Stack.
+
+There is one more item you can remove that is created by deploy.sh and that is the artifact bucket in S3 which is called app-<ACCOUNT_ID>-artifacts.
