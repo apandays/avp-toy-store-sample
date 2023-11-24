@@ -1,9 +1,8 @@
 package org.example.config;
 
 public class RoleCedarTemplates {
-    public static final String STORE_MANAGER_ROLE_TEMPLATE_ID = "TS3QzcDzxukJ9tjWsVhdGt";
-    public static final String PACK_ASSOCIATE_ROLE_TEMPLATE_ID = "3LwAFLAyTFTy73CocXUDrd";
-
+    public static final String STORE_MANAGER_ROLE_TEMPLATE_ID = System.getenv("storeManagerTemplateId");
+    public static final String PACK_ASSOCIATE_ROLE_TEMPLATE_ID = System.getenv("packAssociateTemplateId");
 
     public static String getCedarTemplateIdFromHttpPath(String httpPath) {
         switch (httpPath.toLowerCase()) {

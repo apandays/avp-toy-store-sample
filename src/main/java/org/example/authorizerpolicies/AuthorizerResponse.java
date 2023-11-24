@@ -17,7 +17,6 @@ public class AuthorizerResponse {
 
         @JsonProperty("context")
         private Map<String, String> context;
-
         private AuthorizerResponse(Builder builder) {
             this.principalId = builder.principalId;
             this.policyDocument = builder.policyDocument;
