@@ -28,7 +28,7 @@ The sample application is for managing fulfillment of orders in 4 toy stores. Th
 
 Below diagram shows orders list for a pack associate 
 
-![list orders Screenshot](./static/list_order_screenshot.png)
+<img src="./static/list_order_screenshot.pngg" width="400"/>
 
 2. **Order Actions**: Users can take some actions on an order. The application enables the buttons based on the user’s permissions.
    1. **Pack Associates** can get box size and mark an order as shipped
@@ -36,17 +36,17 @@ Below diagram shows orders list for a pack associate
 
 Below diagram shows order actions for a pack associate
 
-![orders actions Screenshot](./static/order_actions_screenshot.png)
+<img src="./static/order_actions_screenshot.png" width="400"/>
 
 3. **Viewing an Order**: Users can view details of a specific order. When a user views an order, the applications loads the console details, label and receipt.
 
-![orders actions Screenshot](./static/order_page_screenshot.png)
+<img src="./static/order_page_screenshot.png" width="400"/>
 
 4. **Role Management**: Users can manage the roles of other users. They can view and add users to a role in the store.
    1. **Pack Associates** cannot view or add users to a role
    2. **Store Manager**  store managers can view and add users to a role for their store.
 
-![Role Management Screenshot](./static/role_management_screenshot.JPG)
+<img src="./static/role_management_screenshot.JPG" width="400"/>
 
 ## High Level Design
 
@@ -103,7 +103,7 @@ permit (
 ); 
 ```
 
-A template-linked policy is createdg from the above policy template, when a pack associate is a toy store. Below is an example template-linked policy.
+A template-linked policy is created from the above policy template, when a pack associate is a toy store. Below is an example template-linked policy.
 
 ```
 permit (
